@@ -15,29 +15,27 @@
         v-for="i in diceRange.length"
         :key="faceLabel(i)"
       >
-        <label class="flex flex-row gap-2">
-          <RollLabel
-            :label="faceLabel(i).toString()"
-            :dotted="diceCount == 1"
-            @click.left="
-              rollCounts.set(
-                faceLabel(i),
-                (rollCounts.get(faceLabel(i)) ?? 0) + 1
-              )
-            "
-            @click.right.prevent="
-              rollCounts.set(
-                faceLabel(i),
-                Math.max((rollCounts.get(faceLabel(i)) ?? 0) - 1, 0)
-              )
-            "
-          />
-          <NumberInput
-            :min="0"
-            :modelValue="rollCounts.get(faceLabel(i))"
-            @update:modelValue="rollCounts.set(faceLabel(i), Number($event))"
-          />
-        </label>
+        <RollLabel
+          :label="faceLabel(i).toString()"
+          :dotted="diceCount == 1"
+          @click.left="
+            rollCounts.set(
+              faceLabel(i),
+              (rollCounts.get(faceLabel(i)) ?? 0) + 1
+            )
+          "
+          @click.right.prevent="
+            rollCounts.set(
+              faceLabel(i),
+              Math.max((rollCounts.get(faceLabel(i)) ?? 0) - 1, 0)
+            )
+          "
+        />
+        <NumberInput
+          :min="0"
+          :modelValue="rollCounts.get(faceLabel(i))"
+          @update:modelValue="rollCounts.set(faceLabel(i), Number($event))"
+        />
         <DeltaMeter :value="meterValue(i)" />
         <Percentage :value="deltaProbs.get(faceLabel(i)) ?? 0" />
         <span class="text-blueGray-400 mt-0.5 italic tabular-nums flex gap-2">
