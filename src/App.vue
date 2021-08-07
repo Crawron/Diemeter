@@ -1,9 +1,8 @@
 <template>
   <div class="grid place-items-center w-full max-w-56 mx-auto mt-16">
-    <div class="flex flex-col gap-2">
-      <label class="flex flex-row items-center gap-2 h-8">
+    <div class="flex flex-col gap-2 mb-16">
+      <label class="flex flex-row items-center gap-2 h-8 mb-4">
         <div class="w-8 h-8 grid place-items-center"><Icon name="dice" /></div>
-
         <NumberInput v-model="diceCount" :min="1" :max="5" />
       </label>
       <div class="flex flex-row gap-2" v-for="i in diceRange.length" :key="i">
@@ -19,9 +18,9 @@
           />
         </label>
         <DeltaMeter :value="deltaProbs.get(faceLabel(i)) ?? 0" />
-        <!-- <span class="text-blueGray-400 mt-0.5 italic">{{
-            format(averageProbs.get(faceLabel(i)))
-          }}</span> -->
+        <span class="text-blueGray-400 mt-0.5 italic">{{
+          format(averageProbs.get(faceLabel(i)))
+        }}</span>
       </div>
       <span class="text-blueGray-400 font-medium italic">
         Total {{ rollSum }} rolls
