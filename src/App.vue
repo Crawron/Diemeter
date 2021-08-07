@@ -18,8 +18,8 @@
           />
         </label>
         <DeltaMeter :value="deltaProbs.get(faceLabel(i)) ?? 0" />
-        <span class="text-blueGray-400 mt-0.5 italic">{{
-          format(averageProbs.get(faceLabel(i)))
+        <span class="w-14 text-right text-blueGray-400 mt-0.5 italic">{{
+          format(averageProbs.get(faceLabel(i)) ?? 0)
         }}</span>
       </div>
       <span class="text-blueGray-400 font-medium italic">
