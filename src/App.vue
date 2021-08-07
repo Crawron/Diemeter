@@ -1,6 +1,6 @@
 <template>
   <div class="grid place-items-center w-full max-w-56 mx-auto mt-16">
-    <div class="flex flex-col gap-2 mb-16 transition">
+    <div class="flex flex-col gap-2 mb-16">
       <div class="flex flex-row gap-2 h-8 mb-4">
         <label class="flex flex-row items-center gap-2 w-min">
           <div class="w-8 h-8 grid place-items-center">
