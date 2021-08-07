@@ -10,7 +10,7 @@
         font-medium
       "
       type="text"
-      @input="update($event.target.value)"
+      @input="handleInputEvent"
       :value="modelValue ?? 0"
     />
     <div class="w-4 h-full gap-0.5 flex flex-col bg-blueGray-800">
@@ -76,6 +76,9 @@ export default defineComponent({
       modelValue,
       update,
       inputBox,
+      handleInputEvent(event: Event) {
+        update(Number((event.currentTarget! as HTMLInputElement).value));
+      },
     };
   },
 });
