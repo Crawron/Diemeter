@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row align-middle gap-2">
-    <div class="flex flex-row h-8 w-40 gap-0.5">
+    <div class="flex flex-row h-8 w-60 gap-0.5">
       <div class="bg-blueGray-600 w-1/2 overflow-hidden rounded-bl rounded-tl">
         <div
           class="h-full flex-1 transform origin-right"
