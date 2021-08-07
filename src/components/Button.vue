@@ -1,6 +1,5 @@
 <template>
   <button
-    v-if="!lit"
     class="
       h-8
       w-8
@@ -15,24 +14,6 @@
   >
     <Icon :name="icon" />
   </button>
-
-  <button
-    v-else
-    class="
-      h-8
-      w-8
-      grid
-      place-items-center
-      rounded
-      transition
-      bg-blueGray-200
-      hover:bg-blueGray-50
-      active:bg-blueGray-400
-      text-blueGray-800
-    "
-  >
-    <Icon :name="icon" />
-  </button>
 </template>
 
 <script lang="ts">
@@ -41,7 +22,7 @@ import Icon from "./Icon.vue";
 
 export default defineComponent({
   components: { Icon },
-  props: { icon: String, lit: Boolean },
+  props: { icon: String },
   setup(props) {
     return { ...toRefs(props) };
   },

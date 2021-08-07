@@ -19,6 +19,18 @@
           <RollLabel
             :label="faceLabel(i).toString()"
             :dotted="diceCount == 1"
+            @click.left="
+              rollCounts.set(
+                faceLabel(i),
+                (rollCounts.get(faceLabel(i)) ?? 0) + 1
+              )
+            "
+            @click.right.prevent="
+              rollCounts.set(
+                faceLabel(i),
+                Math.max((rollCounts.get(faceLabel(i)) ?? 0) - 1, 0)
+              )
+            "
           />
           <NumberInput
             :min="0"

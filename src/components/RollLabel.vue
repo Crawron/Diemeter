@@ -4,9 +4,13 @@
       w-8
       h-8
       grid
+      select-none
       place-items-center
       bg-blueGray-200
+      hover:bg-blueGray-50
+      active:bg-blueGray-400
       rounded
+      transition
       text-blueGray-800
     "
   >
