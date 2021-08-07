@@ -1,11 +1,15 @@
 <template>
   <div class="grid place-items-center w-full max-w-56 mx-auto mt-16">
-    <div class="flex flex-col gap-2 mb-16">
+    <div class="flex flex-col gap-2 mb-16 transition">
       <label class="flex flex-row items-center gap-2 h-8 mb-4">
         <div class="w-8 h-8 grid place-items-center"><Icon name="dice" /></div>
         <NumberInput v-model="diceCount" :min="1" :max="5" />
       </label>
-      <div class="flex flex-row gap-2" v-for="i in diceRange.length" :key="i">
+      <div
+        class="flex flex-row gap-2"
+        v-for="i in diceRange.length"
+        :key="faceLabel(i)"
+      >
         <label class="flex flex-row gap-2">
           <RollLabel
             :label="faceLabel(i).toString()"
@@ -17,10 +21,17 @@
             @update:modelValue="rollCounts.set(faceLabel(i), Number($event))"
           />
         </label>
-        <DeltaMeter :value="deltaProbs.get(faceLabel(i)) ?? 0" />
-        <span class="w-14 text-right text-blueGray-400 mt-0.5 italic">{{
-          format(averageProbs.get(faceLabel(i)) ?? 0)
-        }}</span>
+        <DeltaMeter :value="meterValue(i)" />
+        <Percentage :value="deltaProbs.get(faceLabel(i)) ?? 0" />
+        <span class="text-blueGray-400 mt-0.5 italic tabular-nums flex gap-2">
+          <span class="w-20 text-right">{{
+            format(resultingProbs.get(faceLabel(i)) ?? 0)
+          }}</span>
+          /
+          <span class="w-16 text-right">{{
+            format(averageProbs.get(faceLabel(i)) ?? 0)
+          }}</span>
+        </span>
       </div>
       <span class="text-blueGray-400 font-medium italic">
         Total {{ rollSum }} rolls
@@ -37,11 +48,12 @@ import RollLabel from "./components/RollLabel.vue";
 import NumberInput from "./components/NumberInput.vue";
 import Icon from "./components/Icon.vue";
 import Button from "./components/Button.vue";
+import Percentage from "./components/Percentage.vue";
 
 import { weightList } from "./math";
 export default defineComponent({
   name: "App",
-  components: { DeltaMeter, RollLabel, NumberInput, Icon, Button },
+  components: { DeltaMeter, RollLabel, NumberInput, Icon, Button, Percentage },
   setup() {
     const diceCount = ref(2);
     const rollCounts = ref(new Map<number, number>());
@@ -86,10 +98,24 @@ export default defineComponent({
         )
     );
 
+    const meterValue = (index: number) => {
+      function lerpInverse(min: number, max: number, value: number) {
+        return (value - min) / (max - min);
+      }
+
+      let value = deltaProbs.value.get(faceLabel(index)) ?? 0;
+      let average = averageProbs.value.get(faceLabel(index)) ?? 0;
+
+      if (value < 0) value = -lerpInverse(0, -average, value);
+      if (value > 0) value = lerpInverse(0, 1 - average, value);
+
+      return value;
+    };
+
     const faceLabel = (index: number) => index + diceRange.value.lowest - 1;
 
     return {
-      meterValue: ref(0),
+      meterValue,
       diceCount,
       diceRange,
       faceLabel,
